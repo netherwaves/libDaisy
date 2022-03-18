@@ -43,7 +43,7 @@
             "-Dflash_layout",
             "-DHSE_VALUE=16000000",
             "-DUSE_HAL_DRIVER",
-            "-Icore/stm32h7_hal_conf.h",
+            "-Isrc/sys/stm32h7xx_hal_conf.h",
             "-Isrc",
             "-Isrc/sys",
             "-Isrc/sys/dma",
@@ -61,8 +61,8 @@
             "-Isrc/dev/sr_4021",
             "-Isrc/util",
             "-Isrc/usbd",
+            "-Isrc/usbh",
             "-Isrc/sys/system_stm32h7xx",
-            "-Isrc/sys/stm32h7xx_hal_conf.h",
             "-I $PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFs/src"
         ]
     }
