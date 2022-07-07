@@ -25,10 +25,10 @@
 var NAVTREE =
 [
   [ "libDaisy", "index.html", [
-    [ "Setting Up Your Development Environment", "index.html#autotoc_md56", null ],
-    [ "Using libDaisy", "index.html#autotoc_md57", null ],
-    [ "Development", "index.html#autotoc_md58", null ],
-    [ "Troubleshooting", "index.html#autotoc_md59", null ],
+    [ "Setting Up Your Development Environment", "index.html#autotoc_md71", null ],
+    [ "Using libDaisy", "index.html#autotoc_md72", null ],
+    [ "Development", "index.html#autotoc_md73", null ],
+    [ "Troubleshooting", "index.html#autotoc_md74", null ],
     [ "API Documentation", "modules.html", "modules" ],
     [ "Getting Started - GPIO", "md_doc_md__a1__getting__started__g_p_i_o.html", [
       [ "The CPP Objects Used", "md_doc_md__a1__getting__started__g_p_i_o.html#autotoc_md2", null ],
@@ -86,14 +86,33 @@ var NAVTREE =
       [ "Class Design with Large Memory", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md46", null ],
       [ "Future Work", "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md47", null ]
     ] ],
-    [ "Development - Unit-Testing", "md_doc_md__b1__development__unit__testing.html", [
-      [ "Why write tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md49", null ],
-      [ "How to run tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md50", [
-        [ "From the commandline", "md_doc_md__b1__development__unit__testing.html#autotoc_md51", null ],
-        [ "From Visual Studio Code", "md_doc_md__b1__development__unit__testing.html#autotoc_md52", null ]
+    [ "Getting Started - Daisy Bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html", [
+      [ "Advantages of the Daisy bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md49", null ],
+      [ "Flashing the bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md50", null ],
+      [ "Generating programs for the bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md51", null ],
+      [ "Flashing with the bootloader", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md52", [
+        [ "DFU", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md53", null ],
+        [ "SD Card", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md54", null ],
+        [ "USB Drive", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md55", null ]
       ] ],
-      [ "Getting started with unit testing", "md_doc_md__b1__development__unit__testing.html#autotoc_md53", null ],
-      [ "Drawbacks & things to watch out for", "md_doc_md__b1__development__unit__testing.html#autotoc_md54", null ]
+      [ "Custom linkers", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md56", null ],
+      [ "Detailed Behavior", "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md57", null ]
+    ] ],
+    [ "SPI", "md_doc_md__a8__getting__started__s_p_i.html", [
+      [ "How to Use SPI", "md_doc_md__a8__getting__started__s_p_i.html#autotoc_md59", [
+        [ "Configuration", "md_doc_md__a8__getting__started__s_p_i.html#autotoc_md60", null ]
+      ] ],
+      [ "Blocking Transmit and Receive", "md_doc_md__a8__getting__started__s_p_i.html#autotoc_md61", null ],
+      [ "DMA Transmit and Receive", "md_doc_md__a8__getting__started__s_p_i.html#autotoc_md62", null ]
+    ] ],
+    [ "Development - Unit-Testing", "md_doc_md__b1__development__unit__testing.html", [
+      [ "Why write tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md64", null ],
+      [ "How to run tests?", "md_doc_md__b1__development__unit__testing.html#autotoc_md65", [
+        [ "From the commandline", "md_doc_md__b1__development__unit__testing.html#autotoc_md66", null ],
+        [ "From Visual Studio Code", "md_doc_md__b1__development__unit__testing.html#autotoc_md67", null ]
+      ] ],
+      [ "Getting started with unit testing", "md_doc_md__b1__development__unit__testing.html#autotoc_md68", null ],
+      [ "Drawbacks & things to watch out for", "md_doc_md__b1__development__unit__testing.html#autotoc_md69", null ]
     ] ],
     [ "Todo List", "todo.html", null ],
     [ "Deprecated List", "deprecated.html", null ],
@@ -115,7 +134,7 @@ var NAVTREE =
         [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Typedefs", "functions_type.html", null ],
         [ "Enumerations", "functions_enum.html", null ],
-        [ "Enumerator", "functions_eval.html", null ],
+        [ "Enumerator", "functions_eval.html", "functions_eval" ],
         [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -136,17 +155,21 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_menu_8h.html",
-"classdaisy_1_1_dac_handle.html#a30248a4615012854c7271b510ba7803cac8cf6eea8f096ed51160b484d97c5bbd",
-"classdaisy_1_1_daisy_versio.html#a4073f1612319523feb506ee979fa428ca883aebb89ab52e6e78a50c760c9aa099",
-"classdaisy_1_1_m_a_x11300_driver.html#ad96dbcf4028a2aed29de10bf117a7d06",
-"classdaisy_1_1_rectangle.html#a5fe610247716deabd714b4ba58435e7d",
-"classdaisy_1_1_u_i.html#ad76cd8102183e7567d2b1bde4f394bee",
-"daisy__seed_8h.html#a75aabcb0c2a5c960ca4314a2bbc37b7c",
-"graphics__common_8h.html",
-"group__midi__events.html#gga4f648ead175d62e97ceb4d3b49f692f5a09f31e6b22e89d20b9a9912a39be26e7",
-"md_doc_md__a3__getting__started__audio.html",
-"structdaisy_1_1_midi_event.html#a95ed496b1b526f640376d5819131d064",
-"structdaisy_1_1_uart_handler_1_1_config.html#a69458bc285ceaf3e20fba9299e2ea5b8"
+"classdaisy_1_1_apds9960.html#a3e2dfaffe42d0bc1482da0d0e0fbad92",
+"classdaisy_1_1_daisy_patch.html#af99999edc9794d9a9ddcced92f0154e9",
+"classdaisy_1_1_dps310_i2_c_transport.html#a40162180243c83a1e86cd28c22ba1d0d",
+"classdaisy_1_1_icm20948_i2_c_transport.html#a7b5d7f8e3ff614f44b8eede5b881f00a",
+"classdaisy_1_1_multi_slave_spi_handle.html#ab2455acb7a9503d845df7ec55fff51bb",
+"classdaisy_1_1_q_s_p_i_handle.html#aac911aafbe4840fa80c4181982a4c72e",
+"classdaisy_1_1_timer_handle.html#a31742af4d164ed7787ffba2c95158ef9",
+"classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html#a20debb020afaf6ee3888aa3ea1891a29",
+"flash___i_s25_l_p080_d_8h.html#a8a9ee23be3785c756f80ca25b7a2e775",
+"group__flash.html#ga3b7e0d2d5d8c080c64110cd29f6ca4ad",
+"group__utility.html#ga8d8655b2e25c2da93fcb1cd9a493bdd4",
+"md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md51",
+"structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334a9fd09442cf8e39f248d0984128076185",
+"structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html#a51b14efb0b5e7871328f53407377b67a",
+"structdsy__gpio.html#a12e4d73b334e9caedb135224bd288384"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
