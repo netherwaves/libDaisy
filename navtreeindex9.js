@@ -39,8 +39,6 @@ var NAVTREEINDEX9 =
 "midi_8h.html#a1e52176e4f92572132c9ea700e70ad9d":[15,0,1,1,8,2],
 "midi_8h_source.html":[15,0,1,1,8],
 "modules.html":[4],
-"namespacedaisy.html":[4,0,6,0],
-"namespacedaisy_1_1_m_a_x11300_types.html":[4,0,4,5,0],
 "oled__display_8h.html":[15,0,1,1,0,2],
 "oled__display_8h.html#a17ac7515457b57899f133df8f905f485":[15,0,1,1,0,2,1],
 "oled__display_8h_source.html":[15,0,1,1,0,2],
@@ -249,5 +247,7 @@ var NAVTREEINDEX9 =
 "structdaisy_1_1_midi_event.html#a5459a58fc45bcdc76a01f0e32888e017":[4,0,1,4,0,20,17],
 "structdaisy_1_1_midi_event.html#a63fe8f48ba2e932b407a8fb4d74f8cc1":[4,0,1,4,0,20,26],
 "structdaisy_1_1_midi_event.html#a6981641c0057f45e3a8556a55948b9fc":[4,0,1,4,0,20,24],
-"structdaisy_1_1_midi_event.html#a7fd8633bad4e22a3a6855ad7b1857dc8":[4,0,1,4,0,20,21]
+"structdaisy_1_1_midi_event.html#a7fd8633bad4e22a3a6855ad7b1857dc8":[4,0,1,4,0,20,21],
+"structdaisy_1_1_midi_event.html#a8a909f5a769eedf0eed5ee54890c5fa5":[4,0,1,4,0,20,0],
+"structdaisy_1_1_midi_event.html#a8f58f94c7adcb1974372ce1379958b76":[4,0,1,4,0,20,23]
 };
