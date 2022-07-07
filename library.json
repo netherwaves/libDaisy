@@ -27,8 +27,17 @@
             "+<src/dev/sr_4021>",
             "+<src/util>",
             "+<src/usbd>",
+
             "+<src/sys/system_stm32h7xx>",
-            "+<src/sys/stm32h7xx_hal_conf.h>"
+            "+<src/sys/stm32h7xx_hal_conf.h>",
+
+            "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src>",
+            "-<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/option>",
+            
+            "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/diskio.c>",
+            "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/ff.c>",
+            "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/ff_gen_drv.c>",
+            "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/option/ccsbcs.c>"
         ],
         "flags": [
             "-std=gnu++14",
@@ -63,7 +72,7 @@
             "-Isrc/usbd",
             "-Isrc/usbh",
             "-Isrc/sys/system_stm32h7xx",
-            "-I $PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFs/src"
+            "-I $PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src"
         ]
     }
   }
