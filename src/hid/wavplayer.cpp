@@ -1,10 +1,15 @@
 #include <cstring>
 #include "hid/wavplayer.h"
+#include "daisy_seed.h"
 
 using namespace daisy;
 
-void WavPlayer::Init(const char *search_path)
+FRESULT WavPlayer::Init(const char *search_path, int16_t *buffer, size_t bufferSize, size_t numChannels)
 {
+    buff_ = buffer;
+    bufferSize_ = bufferSize / numChannels;
+    numChannels_ = numChannels;
+
     // First check for all .wav files, and add them to the list until its full or there are no more.
     // Only checks '/'
     FRESULT result = FR_OK;
@@ -15,11 +20,14 @@ void WavPlayer::Init(const char *search_path)
     file_cnt_ = 0;
     playing_  = true;
     looping_  = false;
+
     // Open Dir and scan for files.
-    if(f_opendir(&dir, search_path) != FR_OK)
+    result = f_opendir(&dir, search_path);
+    if(result != FR_OK)
     {
-        return;
+        return result;
     }
+
     do
     {
         result = f_readdir(&dir, &fno);
@@ -56,23 +64,30 @@ void WavPlayer::Init(const char *search_path)
            == FR_OK)
         {
             // Populate the WAV Info
-            if(f_read(&fil_,
+            result = f_read(&fil_,
                       (void *)&file_info_[i].raw_data,
                       sizeof(WAV_FormatTypeDef),
-                      &bytesread)
-               != FR_OK)
+                      &bytesread);
+            if(result != FR_OK)
             {
                 // Maybe add return type
-                return;
+                return result;
             }
             f_close(&fil_);
         }
     }
+    
     // fill buffer with first file preemptively.
     buff_state_ = BUFFER_STATE_PREPARE_0;
     Open(0);
+    // seek past .WAV header bytes
+    Restart();
+
+    // load 1st half of buffer
     Prepare();
     read_ptr_ = 0;
+
+    return result;
 }
 
 
@@ -83,9 +98,21 @@ int WavPlayer::Open(size_t sel)
         f_close(&fil_);
         file_sel_ = sel < file_cnt_ ? sel : file_cnt_ - 1;
     }
+    
     // Set Buffer Position
     return f_open(
         &fil_, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ));
+}
+
+int WavPlayer::Open(const char* filename)
+{
+    if (strcmp(filename, file_info_[file_sel_].name) != 0)
+    {
+        f_close(&fil_);
+    }
+
+    return f_open(
+        &fil_, filename, (FA_OPEN_EXISTING | FA_READ));
 }
 
 int WavPlayer::Close()
@@ -100,10 +127,10 @@ int16_t WavPlayer::Stream()
     {
         samp = buff_[read_ptr_];
         // Increment rpo
-        read_ptr_ = (read_ptr_ + 1) % kBufferSize;
+        read_ptr_ = (read_ptr_ + 1) % bufferSize_;
         if(read_ptr_ == 0)
             buff_state_ = BUFFER_STATE_PREPARE_1;
-        else if(read_ptr_ == kBufferSize / 2)
+        else if(read_ptr_ == bufferSize_ * numChannels_ / 2)
             buff_state_ = BUFFER_STATE_PREPARE_0;
     }
     else
@@ -115,21 +142,25 @@ int16_t WavPlayer::Stream()
     return samp;
 }
 
-void WavPlayer::Prepare()
+FRESULT WavPlayer::Prepare()
 {
+    FRESULT readres = FR_OK;
+
     if(buff_state_ != BUFFER_STATE_IDLE)
     {
         size_t offset, bytesread, rxsize;
         bytesread = 0;
-        rxsize    = (kBufferSize / 2) * sizeof(buff_[0]);
-        offset    = buff_state_ == BUFFER_STATE_PREPARE_1 ? kBufferSize / 2 : 0;
-        f_read(&fil_, &buff_[offset], rxsize, &bytesread);
+        rxsize    = bufferSize_ * numChannels_ * sizeof(buff_[0]) / 2;
+        offset    = buff_state_ == BUFFER_STATE_PREPARE_1 ? bufferSize_ * numChannels_ / 2 : 0;
+
+        readres = f_read(&fil_, &buff_[offset], rxsize, &bytesread);
+
         if(bytesread < rxsize || f_eof(&fil_))
         {
             if(looping_)
             {
                 Restart();
-                f_read(&fil_,
+                readres = f_read(&fil_,
                        &buff_[offset + (bytesread / 2)],
                        rxsize - bytesread,
                        &bytesread);
@@ -141,6 +172,8 @@ void WavPlayer::Prepare()
         }
         buff_state_ = BUFFER_STATE_IDLE;
     }
+
+    return readres;
 }
 
 void WavPlayer::Restart()
@@ -154,8 +187,8 @@ void WavPlayer::Restart()
 WavPlayer::BufferState WavPlayer::GetNextBuffState()
 {
     size_t next_samp;
-    next_samp = (read_ptr_ + 1) % kBufferSize;
-    if(next_samp < kBufferSize / 2)
+    next_samp = (read_ptr_ + 1) % bufferSize_;
+    if(next_samp < bufferSize_ / 2)
     {
         return BUFFER_STATE_PREPARE_1;
     }

@@ -41,12 +41,17 @@ class WavPlayer
     ~WavPlayer() {}
 
     /** Initializes the WavPlayer, loading up to max_files of wav files from an SD Card. */
-    void Init(const char* search_path);
+    FRESULT Init(const char* search_path, int16_t *buffer, size_t bufferSize, size_t numChannels = 1);
 
     /** Opens the file at index sel for reading.
     \param sel File to open
      */
     int Open(size_t sel);
+
+    /** Opens the file at index sel for reading.
+    \param filename File to open
+     */
+    int Open(const char* filename);
 
     /** Closes whatever file is currently open.
     \return &
@@ -57,7 +62,7 @@ class WavPlayer
     int16_t Stream();
 
     /** Collects buffer for playback when needed. */
-    void Prepare();
+    FRESULT Prepare();
 
     /** Resets the playback position to the beginning of the file immediately */
     void Restart();
@@ -87,11 +92,13 @@ class WavPlayer
     BufferState GetNextBuffState();
 
     static constexpr size_t kMaxFiles   = 8;
-    static constexpr size_t kBufferSize = 4096;
+
+    int16_t*                buff_;
+    size_t                  bufferSize_;
+    size_t                  numChannels_;
     WavFileInfo             file_info_[kMaxFiles];
     size_t                  file_cnt_, file_sel_;
     BufferState             buff_state_;
-    int16_t                 buff_[kBufferSize];
     size_t                  read_ptr_;
     bool                    looping_, playing_;
     FIL                     fil_;
