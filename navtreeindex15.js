@@ -1,5 +1,6 @@
 var NAVTREEINDEX15 =
 {
+"structdsy__gpio.html":[4,0,2,2,0],
 "structdsy__gpio.html#a12e4d73b334e9caedb135224bd288384":[4,0,2,2,0,0],
 "structdsy__gpio.html#a92d61fa4d53b923b328e7e1ca8a67100":[4,0,2,2,0,1],
 "structdsy__gpio.html#af15905326174d62efafda5775d2aea8a":[4,0,2,2,0,2],

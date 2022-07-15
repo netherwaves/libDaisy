@@ -1,5 +1,6 @@
 var NAVTREEINDEX11 =
 {
+"group__utility.html#ga8d66ac35cee6a454f7e584f0051bc9f8":[4,0,6,46],
 "group__utility.html#ga8d8655b2e25c2da93fcb1cd9a493bdd4":[4,0,6,39],
 "group__utility.html#ga92eaa2f64608077d8b56e41f0e5ac1ca":[4,0,6,60],
 "group__utility.html#ga9614e2840d384ae68e0072f20d6a7208":[4,0,6,15],
@@ -248,6 +249,5 @@ var NAVTREEINDEX11 =
 "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md46":[9,3],
 "md_doc_md__a6__getting__started__external__s_d_r_a_m.html#autotoc_md47":[9,4],
 "md_doc_md__a7__getting__started__daisy__bootloader.html":[10],
-"md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md49":[10,0],
-"md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md50":[10,1]
+"md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md49":[10,0]
 };

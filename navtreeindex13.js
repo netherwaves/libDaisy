@@ -1,5 +1,6 @@
 var NAVTREEINDEX13 =
 {
+"structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334a2ced0a5aac16ae040d7f6b032525fd5f":[16,0,0,30,0,0,0],
 "structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334a9fd09442cf8e39f248d0984128076185":[16,0,0,30,0,0,1],
 "structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa78b8109de982c0b958d44d875a91588":[16,0,0,30,0,1],
 "structdaisy_1_1_g_p_i_o_1_1_config.html":[4,0,2,3,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX13 =
 "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html#af2f5c92ac23ceeed040e6f63d880cbaa":[16,0,0,103,0,0],
 "structdaisy_1_1_s_s_d130x_driver_1_1_config.html":[16,0,0,104,0],
 "structdaisy_1_1_s_s_d130x_driver_1_1_config.html#a576d18c3fe7f9a81565cd21ccca866da":[16,0,0,104,0,0],
-"structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html":[16,0,0,105,0],
-"structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html#a4ab21336ab0b2e121284265d2902091d":[16,0,0,105,0,2]
+"structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html":[16,0,0,105,0]
 };

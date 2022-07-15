@@ -109,16 +109,18 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a0ba0f864a3fb972461fa97bbba22d836"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5aad333a53f985af43a856b252289b8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#a5aad333a53f985af43a856b252289b8a">~WavPlayer</a> ()</td></tr>
 <tr class="separator:a5aad333a53f985af43a856b252289b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a098078377eb545263538e56c53b56e4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#a098078377eb545263538e56c53b56e4e">Init</a> (const char *search_path)</td></tr>
-<tr class="separator:a098078377eb545263538e56c53b56e4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a514213238365f7436a5b8bbb3b097e33"><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#a514213238365f7436a5b8bbb3b097e33">Init</a> (const char *search_path, int16_t *buffer, size_t bufferSize, size_t numChannels=1)</td></tr>
+<tr class="separator:a514213238365f7436a5b8bbb3b097e33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab125d0c6fb01b45443b57df96255efb9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#ab125d0c6fb01b45443b57df96255efb9">Open</a> (size_t sel)</td></tr>
 <tr class="separator:ab125d0c6fb01b45443b57df96255efb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbc0adba58955193630a31d172844e30"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#adbc0adba58955193630a31d172844e30">Open</a> (const char *filename)</td></tr>
+<tr class="separator:adbc0adba58955193630a31d172844e30"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc0c84ee0ecc56e734908a8c1384c5c2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#adc0c84ee0ecc56e734908a8c1384c5c2">Close</a> ()</td></tr>
 <tr class="separator:adc0c84ee0ecc56e734908a8c1384c5c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52be0ed680b908241ffc287f879c6c7a"><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#a52be0ed680b908241ffc287f879c6c7a">Stream</a> ()</td></tr>
 <tr class="separator:a52be0ed680b908241ffc287f879c6c7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1126bb632eb141d2979c25cedde354cd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#a1126bb632eb141d2979c25cedde354cd">Prepare</a> ()</td></tr>
-<tr class="separator:a1126bb632eb141d2979c25cedde354cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb15ef62884938495025b5c7470add85"><td class="memItemLeft" align="right" valign="top">FRESULT&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#afb15ef62884938495025b5c7470add85">Prepare</a> ()</td></tr>
+<tr class="separator:afb15ef62884938495025b5c7470add85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3b2f9f9cdf18ea861be227dcffd5da9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#ac3b2f9f9cdf18ea861be227dcffd5da9">Restart</a> ()</td></tr>
 <tr class="separator:ac3b2f9f9cdf18ea861be227dcffd5da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29d340360f073bd1767e51a06876eafe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdaisy_1_1_wav_player.html#a29d340360f073bd1767e51a06876eafe">SetLooping</a> (bool loop)</td></tr>
@@ -278,18 +280,40 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a098078377eb545263538e56c53b56e4e" name="a098078377eb545263538e56c53b56e4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a098078377eb545263538e56c53b56e4e">&#9670;&nbsp;</a></span>Init()</h2>
+<a id="a514213238365f7436a5b8bbb3b097e33" name="a514213238365f7436a5b8bbb3b097e33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a514213238365f7436a5b8bbb3b097e33">&#9670;&nbsp;</a></span>Init()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::WavPlayer::Init </td>
+          <td class="memname">FRESULT daisy::WavPlayer::Init </td>
           <td>(</td>
           <td class="paramtype">const char *&#160;</td>
-          <td class="paramname"><em>search_path</em></td><td>)</td>
+          <td class="paramname"><em>search_path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">int16_t *&#160;</td>
+          <td class="paramname"><em>buffer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>bufferSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>numChannels</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -297,8 +321,32 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="adbc0adba58955193630a31d172844e30" name="adbc0adba58955193630a31d172844e30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbc0adba58955193630a31d172844e30">&#9670;&nbsp;</a></span>Open() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int daisy::WavPlayer::Open </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Opens the file at index sel for reading. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>File to open </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ab125d0c6fb01b45443b57df96255efb9" name="ab125d0c6fb01b45443b57df96255efb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab125d0c6fb01b45443b57df96255efb9">&#9670;&nbsp;</a></span>Open()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab125d0c6fb01b45443b57df96255efb9">&#9670;&nbsp;</a></span>Open() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,14 +369,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1126bb632eb141d2979c25cedde354cd" name="a1126bb632eb141d2979c25cedde354cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1126bb632eb141d2979c25cedde354cd">&#9670;&nbsp;</a></span>Prepare()</h2>
+<a id="afb15ef62884938495025b5c7470add85" name="afb15ef62884938495025b5c7470add85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb15ef62884938495025b5c7470add85">&#9670;&nbsp;</a></span>Prepare()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void daisy::WavPlayer::Prepare </td>
+          <td class="memname">FRESULT daisy::WavPlayer::Prepare </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>

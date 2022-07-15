@@ -1,5 +1,6 @@
 var NAVTREEINDEX12 =
 {
+"md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md50":[10,1],
 "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md51":[10,2],
 "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md52":[10,3],
 "md_doc_md__a7__getting__started__daisy__bootloader.html#autotoc_md53":[10,3,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX12 =
 "structdaisy_1_1_dps310_spi_transport_1_1_config.html#abd0257a223fc9e66455116e7dcf2544c":[4,1,3,0,3],
 "structdaisy_1_1_dps310_spi_transport_1_1_config.html#afb7d990534a354c01750af84c30e0222":[4,1,3,0,4],
 "structdaisy_1_1_fat_f_s_interface_1_1_config.html":[16,0,0,30,0],
-"structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334":[16,0,0,30,0,0],
-"structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334a2ced0a5aac16ae040d7f6b032525fd5f":[16,0,0,30,0,0,0]
+"structdaisy_1_1_fat_f_s_interface_1_1_config.html#aa749d7b2739147217cfbc38c99462334":[16,0,0,30,0,0]
 };
