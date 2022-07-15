@@ -78,8 +78,9 @@ FRESULT WavPlayer::Init(const char *search_path, int16_t *buffer, size_t bufferS
     }
     
     // fill buffer with first file preemptively.
+    size_t idx = 0;
     buff_state_ = BUFFER_STATE_PREPARE_0;
-    Open(0);
+    Open(idx);
     // seek past .WAV header bytes
     Restart();
 
