@@ -1,6 +1,24 @@
 {
-    "name": "libdaisy",
-    "version": "0.0.1",
+    "name": "libDaisy",
+    "version": "1.0.0",
+    "description": "Hardware Library for the Daisy Audio Platform",
+    "keywords": "audio, embedded, hardware, midi, stm32, sound, daisy",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/electro-smith/libDaisy.git"
+    },
+    "authors": [
+        {
+            "name": "Electrosmith",
+            "website": "https://www.electro-smith.com",
+            "maintainer": true
+        }
+    ],
+    "homepage": "https://www.electro-smith.com/daisy",
+    "license": "MIT",
+    "frameworks": ["stm32cube"],
+    "platforms": ["ststm32"],
+
     "build": {
         "extraScript": "./platformio_extra_build_script.py",
         "srcDir" : "./",
