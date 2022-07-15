@@ -31,9 +31,6 @@
             "+<src/sys/system_stm32h7xx>",
             "+<src/sys/stm32h7xx_hal_conf.h>",
 
-            "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src>",
-            "-<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/option>",
-            
             "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/diskio.c>",
             "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/ff.c>",
             "+<$PROJECT_DIR/packages/framework-stm32cubeh7/Middlewares/Third_Party/FatFS/src/ff_gen_drv.c>",
