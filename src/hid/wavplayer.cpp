@@ -4,10 +4,13 @@
 
 using namespace daisy;
 
-int WavPlayer::Init(const char *search_path, int16_t *buffer, size_t bufferSize, size_t numChannels)
+int WavPlayer::Init(const char *search_path,
+                    int16_t *  buffer,
+                    size_t     bufferSize,
+                    size_t     numChannels)
 {
-    buff_ = buffer;
-    bufferSize_ = bufferSize / numChannels;
+    buff_        = buffer;
+    bufferSize_  = bufferSize / numChannels;
     numChannels_ = numChannels;
 
     // First check for all .wav files, and add them to the list until its full or there are no more.
@@ -65,9 +68,9 @@ int WavPlayer::Init(const char *search_path, int16_t *buffer, size_t bufferSize,
         {
             // Populate the WAV Info
             result = f_read(&fil_,
-                      (void *)&file_info_[i].raw_data,
-                      sizeof(WAV_FormatTypeDef),
-                      &bytesread);
+                            (void *)&file_info_[i].raw_data,
+                            sizeof(WAV_FormatTypeDef),
+                            &bytesread);
             if(result != FR_OK)
             {
                 // Maybe add return type
@@ -76,7 +79,7 @@ int WavPlayer::Init(const char *search_path, int16_t *buffer, size_t bufferSize,
             f_close(&fil_);
         }
     }
-    
+
     // fill buffer with first file preemptively.
     buff_state_ = BUFFER_STATE_PREPARE_0;
     Open((size_t)0);
@@ -97,7 +100,7 @@ int WavPlayer::Open(size_t sel)
         f_close(&fil_);
         file_sel_ = sel < file_cnt_ ? sel : file_cnt_ - 1;
     }
-    
+
     // Set Buffer Position
     return f_open(
         &fil_, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ));
@@ -105,14 +108,13 @@ int WavPlayer::Open(size_t sel)
 
 int WavPlayer::Open(const char* filename)
 {
-    if (strcmp(filename, file_info_[file_sel_].name) != 0)
+    if(strcmp(filename, file_info_[file_sel_].name) != 0)
     {
         f_close(&fil_);
         file_sel_ = -1;
     }
 
-    return f_open(
-        &fil_, filename, (FA_OPEN_EXISTING | FA_READ));
+    return f_open(&fil_, filename, (FA_OPEN_EXISTING | FA_READ));
 }
 
 int WavPlayer::Close()
@@ -160,7 +162,9 @@ int WavPlayer::Prepare()
         size_t offset, bytesread, rxsize;
         bytesread = 0;
         rxsize    = bufferSize_ * numChannels_ * sizeof(buff_[0]) / 2;
-        offset    = buff_state_ == BUFFER_STATE_PREPARE_1 ? bufferSize_ * numChannels_ / 2 : 0;
+        offset    = buff_state_ == BUFFER_STATE_PREPARE_1
+                     ? bufferSize_ * numChannels_ / 2
+                     : 0;
 
         readres = f_read(&fil_, &buff_[offset], rxsize, &bytesread);
 
@@ -170,9 +174,9 @@ int WavPlayer::Prepare()
             {
                 Restart();
                 readres = f_read(&fil_,
-                       &buff_[offset + (bytesread / 2)],
-                       rxsize - bytesread,
-                       &bytesread);
+                                 &buff_[offset + (bytesread / 2)],
+                                 rxsize - bytesread,
+                                 &bytesread);
             }
             else
             {

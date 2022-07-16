@@ -46,7 +46,10 @@ class WavPlayer
     };
 
     /** Initializes the WavPlayer, loading up to max_files of wav files from an SD Card. */
-    int Init(const char* search_path, int16_t *buffer, size_t bufferSize, size_t numChannels = 1);
+    int Init(const char* search_path,
+             int16_t     *buffer,
+             size_t      bufferSize,
+             size_t      numChannels = 1);
 
     /** Opens the file at index sel for reading.
     \param sel File to open
@@ -97,17 +100,17 @@ class WavPlayer
 
     BufferState GetNextBuffState();
 
-    static constexpr size_t kMaxFiles   = 8;
+    static constexpr size_t kMaxFiles = 8;
 
-    int16_t*                buff_;
-    size_t                  bufferSize_;
-    size_t                  numChannels_;
-    WavFileInfo             file_info_[kMaxFiles];
-    size_t                  file_cnt_, file_sel_;
-    BufferState             buff_state_;
-    size_t                  read_ptr_;
-    bool                    looping_, playing_;
-    FIL                     fil_;
+    int16_t*    buff_;
+    size_t      bufferSize_;
+    size_t      numChannels_;
+    WavFileInfo file_info_[kMaxFiles];
+    size_t      file_cnt_, file_sel_;
+    BufferState buff_state_;
+    size_t      read_ptr_;
+    bool        looping_, playing_;
+    FIL         fil_;
 };
 
 } // namespace daisy
