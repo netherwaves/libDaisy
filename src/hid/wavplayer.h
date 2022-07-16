@@ -40,14 +40,15 @@ class WavPlayer
     WavPlayer() {}
     ~WavPlayer() {}
 
-    struct StereoSample {
-      int16_t l;
-      int16_t r;
+    struct StereoSample
+    {
+        int16_t l;
+        int16_t r;
     };
 
     /** Initializes the WavPlayer, loading up to max_files of wav files from an SD Card. */
     int Init(const char* search_path,
-             int16_t     *buffer,
+             int16_t*    buffer,
              size_t      bufferSize,
              size_t      numChannels = 1);
 
@@ -67,7 +68,7 @@ class WavPlayer
     int Close();
 
     /** \return The next sample if playing, otherwise returns 0 */
-    int16_t Stream();
+    int16_t      Stream();
     StereoSample StreamStereo();
 
     /** Collects buffer for playback when needed. */

@@ -5,9 +5,9 @@
 using namespace daisy;
 
 int WavPlayer::Init(const char *search_path,
-                    int16_t *  buffer,
-                    size_t     bufferSize,
-                    size_t     numChannels)
+                    int16_t    *buffer,
+                    size_t      bufferSize,
+                    size_t      numChannels)
 {
     buff_        = buffer;
     bufferSize_  = bufferSize / numChannels;
@@ -18,7 +18,7 @@ int WavPlayer::Init(const char *search_path,
     FRESULT result = FR_OK;
     FILINFO fno;
     DIR     dir;
-    char *  fn;
+    char   *fn;
     file_sel_ = 0;
     file_cnt_ = 0;
     playing_  = true;
@@ -106,7 +106,7 @@ int WavPlayer::Open(size_t sel)
         &fil_, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ));
 }
 
-int WavPlayer::Open(const char* filename)
+int WavPlayer::Open(const char *filename)
 {
     if(strcmp(filename, file_info_[file_sel_].name) != 0)
     {
@@ -144,12 +144,9 @@ int16_t WavPlayer::Stream()
     return samp;
 }
 
-WavPlayer::StereoSample WavPlayer::StreamStereo() {
-    static StereoSample samps = {
-        Stream(),
-        Stream()
-    };
-
+WavPlayer::StereoSample WavPlayer::StreamStereo()
+{
+    static StereoSample samps = {Stream(), Stream()};
     return samps;
 }
 
@@ -163,8 +160,8 @@ int WavPlayer::Prepare()
         bytesread = 0;
         rxsize    = bufferSize_ * numChannels_ * sizeof(buff_[0]) / 2;
         offset    = buff_state_ == BUFFER_STATE_PREPARE_1
-                     ? bufferSize_ * numChannels_ / 2
-                     : 0;
+                        ? bufferSize_ * numChannels_ / 2
+                        : 0;
 
         readres = f_read(&fil_, &buff_[offset], rxsize, &bytesread);
 
