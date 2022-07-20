@@ -144,9 +144,9 @@ int16_t WavPlayer::Stream()
     return samp;
 }
 
-WavPlayer::StereoSample WavPlayer::StreamStereo()
+int16_t *WavPlayer::StreamStereo()
 {
-    static StereoSample samps = {Stream(), Stream()};
+    int16_t samps[2] = {Stream(), Stream()};
     return samps;
 }
 
