@@ -37,7 +37,9 @@ cache enabled.
 #define S82F_SCALE 0.0078125f         /**< 1 / (2**7) */
 #define F2S8_SCALE 127.0f             /**< (2 ** 7) - 1 */
 #define S162F_SCALE 3.0517578125e-05f /**< 1 / (2** 15) */
+#define U162F_SCALE 1.5258789063e-05f /**< 1 / (2** 16) */
 #define F2S16_SCALE 32767.0f          /**< (2 ** 15) - 1 */
+#define F2U16_SCALE 32767.0f          /**< 65536 - 1 */
 #define F2S24_SCALE 8388608.0f        /**< 2 ** 23 */
 #define S242F_SCALE 1.192092896e-07f  /**< 1 / (2 ** 23) */
 #define S24SIGN 0x800000              /**< 2 ** 23 */
@@ -91,6 +93,17 @@ FORCE_INLINE uint8_t f2u8(float x)
     return (uint8_t)((x * F2U8_SCALE) + F2U8_SCALE);
 }
 
+/** 
+    Converts float to unsigned 16-bit
+    \param x Number to be scaled.
+    \return Scaled number.
+*/
+FORCE_INLINE uint16_t f2u16(float x)
+{
+    x = x <= FBIPMIN ? FBIPMIN : x;
+    x = x >= FBIPMAX ? FBIPMAX : x;
+    return (uint16_t)((x * F2U16_SCALE) + F2U16_SCALE);
+}
 
 /** 
     Converts Signed 8-bit to float
@@ -120,6 +133,16 @@ FORCE_INLINE int8_t f2s8(float x)
 FORCE_INLINE float s162f(int16_t x)
 {
     return (float)x * S162F_SCALE;
+}
+
+/** 
+    Converts Unsigned 16-bit to float
+    \param x Number to be scaled.
+    \return Scaled number.
+*/
+FORCE_INLINE float u162f(int16_t x)
+{
+    return (float)x * U162F_SCALE;
 }
 
 /**
