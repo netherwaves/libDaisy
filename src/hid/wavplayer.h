@@ -41,10 +41,10 @@ class WavPlayer
     ~WavPlayer() {}
 
     /** Initializes the WavPlayer, loading up to max_files of wav files from an SD Card. */
-    int Init(const char* search_path,
-             int16_t*    buffer,
-             size_t      bufferSize,
-             size_t      numChannels = 1);
+    FRESULT Init(const char* search_path,
+                 int16_t*    buffer,
+                 size_t      bufferSize,
+                 size_t      numChannels = 1);
 
     /** Opens the file at index sel for reading.
     \param sel File to open

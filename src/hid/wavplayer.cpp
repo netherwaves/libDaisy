@@ -4,10 +4,10 @@
 
 using namespace daisy;
 
-int WavPlayer::Init(const char *search_path,
-                    int16_t    *buffer,
-                    size_t      bufferSize,
-                    size_t      numChannels)
+FRESULT WavPlayer::Init(const char *search_path,
+                        int16_t    *buffer,
+                        size_t      bufferSize,
+                        size_t      numChannels)
 {
     buff_        = buffer;
     bufferSize_  = bufferSize / numChannels;
