@@ -51,11 +51,6 @@ class WavPlayer
      */
     int Open(size_t sel);
 
-    /** Opens the file by name for reading.
-    \param filename File to open
-     */
-    int Open(const char* filename);
-
     /** Closes whatever file is currently open.
     \return &
      */
@@ -84,6 +79,8 @@ class WavPlayer
 
     /** \return currently selected file.*/
     inline size_t GetCurrentFile() const { return file_sel_; }
+
+    inline const char* GetNameOf(const size_t idx_) const { return file_info_[idx_].name; }
 
   private:
     enum BufferState

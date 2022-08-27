@@ -21,7 +21,7 @@ FRESULT WavPlayer::Init(const char *search_path,
     char   *fn;
     file_sel_ = 0;
     file_cnt_ = 0;
-    playing_  = true;
+    playing_  = false;
     looping_  = false;
 
     // Open Dir and scan for files.
@@ -47,6 +47,13 @@ FRESULT WavPlayer::Init(const char *search_path,
             if(strstr(fn, ".wav") || strstr(fn, ".WAV"))
             {
                 strcpy(file_info_[file_cnt_].name, search_path);
+
+                // add an extra slash for non-root directories
+                if(strcmp(search_path, "0:/") != 0)
+                {
+                    strcat(file_info_[file_cnt_].name, "/");
+                }
+
                 strcat(file_info_[file_cnt_].name, fn);
                 file_cnt_++;
                 // For now lets break anyway to test.
@@ -80,13 +87,8 @@ FRESULT WavPlayer::Init(const char *search_path,
         }
     }
 
-    // fill buffer with first file preemptively.
-    buff_state_ = BUFFER_STATE_PREPARE_0;
-    Open((size_t)0);
-    // seek past .WAV header bytes
-    Restart();
-    // load 1st half of buffer
-    Prepare();
+    // initialize at Nothing
+    buff_state_ = BUFFER_STATE_IDLE;
     read_ptr_ = 0;
 
     return result;
@@ -102,19 +104,21 @@ int WavPlayer::Open(size_t sel)
     }
 
     // Set Buffer Position
-    return f_open(
-        &fil_, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ));
-}
-
-int WavPlayer::Open(const char *filename)
-{
-    if(strcmp(filename, file_info_[file_sel_].name) != 0)
+    if(int result = f_open(
+        &fil_, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ)))
     {
-        f_close(&fil_);
-        file_sel_ = -1;
+        return result;
     }
+    else
+    {
+        // prepare buffer for reading...
+        Restart();
+        buff_state_ = BUFFER_STATE_PREPARE_0;
+        Prepare();
+        read_ptr_ = 0;
 
-    return f_open(&fil_, filename, (FA_OPEN_EXISTING | FA_READ));
+        return result;
+    }
 }
 
 int WavPlayer::Close()
@@ -146,7 +150,19 @@ int16_t WavPlayer::Stream()
 
 int16_t *WavPlayer::StreamStereo()
 {
-    int16_t samps[2] = {Stream(), Stream()};
+    int16_t* samps = new int16_t[2];
+
+    if(playing_)
+    {
+        samps[0] = Stream();
+        samps[1] = Stream();
+    }
+    else
+    {
+        samps[0] = 0;
+        samps[1] = 0;
+    }
+
     return samps;
 }
 
