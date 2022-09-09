@@ -83,13 +83,21 @@ FRESULT WavPlayer::Init(const char *search_path,
                 // Maybe add return type
                 return result;
             }
+
+            // add length
+            file_info_[i].length = file_info_[i].raw_data.FileSize 
+                                 - file_info_[i].raw_data.SubChunk1Size
+                                 - sizeof(WAV_FormatTypeDef);
+
+            file_info_[i].length /= 2;                  // 16-bit
+
             f_close(&fil_);
         }
     }
 
     // initialize at Nothing
     buff_state_ = BUFFER_STATE_IDLE;
-    read_ptr_ = 0;
+    read_ptr_ = read_ptr_abs_ = 0;
 
     return result;
 }
@@ -112,13 +120,33 @@ int WavPlayer::Open(size_t sel)
     else
     {
         // prepare buffer for reading...
-        Restart();
+        read_ptr_ = read_ptr_abs_ = 0;
         buff_state_ = BUFFER_STATE_PREPARE_0;
+        Restart();
         Prepare();
-        read_ptr_ = 0;
 
         return result;
     }
+}
+
+int WavPlayer::OpenByFilename(char* filename)
+{
+    char fn[strlen(filename) + 1];
+    strcpy(fn, filename);
+
+    // find index based on filename
+    size_t idx = -1;
+    for(size_t i = 0; i < kMaxFiles; i++)
+    {
+        if(strstr(fn, file_info_[i].name) != nullptr)
+        {
+            idx = i;
+            break;
+        }
+    }
+
+    if(idx >= 0)
+        return Open(idx);
 }
 
 int WavPlayer::Close()
@@ -138,6 +166,13 @@ int16_t WavPlayer::Stream()
             buff_state_ = BUFFER_STATE_PREPARE_1;
         else if(read_ptr_ == bufferSize_ * numChannels_ / 2)
             buff_state_ = BUFFER_STATE_PREPARE_0;
+
+        // absolute pointer
+        read_ptr_abs_ = (read_ptr_abs_ + 1) % (file_info_[file_sel_].length);
+        if(read_ptr_abs_ == 0)
+        {
+
+        }
     }
     else
     {
@@ -223,3 +258,8 @@ WavPlayer::BufferState WavPlayer::GetNextBuffState()
         return BUFFER_STATE_PREPARE_0;
     }
 }
+
+uint32_t WavPlayer::TimeUntilEOF() {
+      if(!playing_) return 0;
+      return (float)((file_info_[file_sel_].length - read_ptr_abs_) / numChannels_ / 48000.0) * 1000;
+    };
