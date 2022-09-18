@@ -131,7 +131,12 @@ void LcdHD44780::PrintInt(int number)
 
 void LcdHD44780::SetCursor(uint8_t row, uint8_t col)
 {
-    WriteCommand(SET_DDRAM_ADDR + (row == 1 ? 0x40 : 0) + col);
+    uint8_t row_offset = 0;
+
+    if(row % 2 == 1) row_offset += 0x40;
+    if(row > 1)      row_offset += 0x14;
+
+    WriteCommand(SET_DDRAM_ADDR + row_offset + col);
 }
 
 
