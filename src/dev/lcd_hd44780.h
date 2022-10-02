@@ -47,6 +47,8 @@ class LcdHD44780
      */
     void PrintInt(int number);
 
+    void PrintChar(char c);
+
     /** 
     Moves the cursor of the LCD (the place to print the next value).
      * \param row is the row number (0 or 1).
@@ -54,10 +56,14 @@ class LcdHD44780
      */
     void SetCursor(uint8_t row, uint8_t col);
 
+    void CreateChar(uint8_t pos, uint8_t* charmap);
+
     /** 
     Clears the contents of the LCD.
      */
     void Clear();
+
+    void Home();
 
   private:
     bool     cursor_on;

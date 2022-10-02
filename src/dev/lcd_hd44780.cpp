@@ -26,6 +26,8 @@ Based on: HD44780-Stm32HAL by Olivier Van den Eede (https://github.com/4ilo/HD44
 #define OPT_S 0x01   // Shift entire display to right
 #define OPT_INC 0x02 // Cursor increment
 
+#define RETURN_HOME 0x02 
+
 #define DISPLAY_ON_OFF_CONTROL 0x08
 #define OPT_D 0x04 // Turn on display
 #define OPT_C 0x02 // Turn on cursor
@@ -126,6 +128,11 @@ void LcdHD44780::PrintInt(int number)
     Print(buffer);
 }
 
+void LcdHD44780::PrintChar(char c)
+{
+    WriteData(c);
+}
+
 
 // Set cursor position
 
@@ -139,12 +146,27 @@ void LcdHD44780::SetCursor(uint8_t row, uint8_t col)
     WriteCommand(SET_DDRAM_ADDR + row_offset + col);
 }
 
+void LcdHD44780::CreateChar(uint8_t pos, uint8_t* charmap)
+{
+    pos &= 0x07;
+    WriteCommand(SETCGRAM_ADDR | (pos << 3));
+    for(int i = 0; i < 8; i++)
+    {
+        WriteData(charmap[i]);
+    }
+}
+
 
 // Clear screen
 
 void LcdHD44780::Clear()
 {
     WriteCommand(CLEAR_DISPLAY);
+}
+
+void LcdHD44780::Home()
+{
+    WriteCommand(RETURN_HOME);
 }
 
 
