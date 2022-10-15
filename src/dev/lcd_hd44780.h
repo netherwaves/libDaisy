@@ -65,6 +65,12 @@ class LcdHD44780
 
     void Home();
 
+    // async
+    inline void SetDataRegister() { dsy_gpio_write(&lcd_pin_rs, 1); };
+    inline void ResetEnablePin()  { dsy_gpio_write(&lcd_pin_en, 0); };
+    
+    void PrintAsync(uint8_t, uint8_t);
+
   private:
     bool     cursor_on;
     bool     cursor_blink;
@@ -75,6 +81,8 @@ class LcdHD44780
     void WriteData(uint8_t);
     void WriteCommand(uint8_t);
     void Write(uint8_t, uint8_t);
+
+    void WriteAsync(uint8_t, uint8_t);
 };
 
 } // namespace daisy
