@@ -66,8 +66,9 @@ class LcdHD44780
     void Home();
 
     // async
-    inline void SetDataRegister() { dsy_gpio_write(&lcd_pin_rs, 1); };
-    inline void ResetEnablePin()  { dsy_gpio_write(&lcd_pin_en, 0); };
+    inline void SetCommandRegister() { dsy_gpio_write(&lcd_pin_rs, 0); }
+    inline void SetDataRegister()    { dsy_gpio_write(&lcd_pin_rs, 1); }
+    inline void ResetEnablePin()     { dsy_gpio_write(&lcd_pin_en, 0); }
     
     void PrintAsync(uint8_t, uint8_t);
 
