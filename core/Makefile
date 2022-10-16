@@ -35,7 +35,7 @@ OPT ?= -O2
 ######################################
 
 # Build path
-BUILD_DIR = build
+BUILD_DIR ?= build
 
 LIBDAISY_DIR ?= \
 ./libdaisy
