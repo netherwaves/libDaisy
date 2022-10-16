@@ -46,15 +46,16 @@ FRESULT WavPlayer::Init(const char *search_path,
         {
             if(strstr(fn, ".wav") || strstr(fn, ".WAV"))
             {
-                strcpy(file_info_[file_cnt_].name, search_path);
+                strcpy(file_info_[file_cnt_].name, fn);
+                strcpy(file_info_[file_cnt_].path, search_path);
 
                 // add an extra slash for non-root directories
                 if(strcmp(search_path, "0:/") != 0)
                 {
-                    strcat(file_info_[file_cnt_].name, "/");
+                    strcat(file_info_[file_cnt_].path, "/");
                 }
 
-                strcat(file_info_[file_cnt_].name, fn);
+                strcat(file_info_[file_cnt_].path, fn);
                 file_cnt_++;
                 // For now lets break anyway to test.
                 //                break;
@@ -70,7 +71,7 @@ FRESULT WavPlayer::Init(const char *search_path,
     for(size_t i = 0; i < file_cnt_; i++)
     {
         size_t bytesread;
-        if(f_open(&fil_, file_info_[i].name, (FA_OPEN_EXISTING | FA_READ))
+        if(f_open(&fil_, file_info_[i].path, (FA_OPEN_EXISTING | FA_READ))
            == FR_OK)
         {
             // Populate the WAV Info
@@ -113,7 +114,7 @@ int WavPlayer::Open(size_t sel)
 
     // Set Buffer Position
     if(int result = f_open(
-        &fil_, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ)))
+        &fil_, file_info_[file_sel_].path, (FA_OPEN_EXISTING | FA_READ)))
     {
         return result;
     }
@@ -129,16 +130,14 @@ int WavPlayer::Open(size_t sel)
     }
 }
 
-int WavPlayer::OpenByFilename(char* filename)
+int WavPlayer::OpenById(const char* id)
 {
-    char fn[strlen(filename) + 1];
-    strcpy(fn, filename);
-
+    // add extension
     // find index based on filename
-    size_t idx = -1;
+    int idx = -1;
     for(size_t i = 0; i < kMaxFiles; i++)
     {
-        if(strstr(fn, file_info_[i].name) != nullptr)
+        if(strstr(file_info_[i].name, id) != nullptr)
         {
             idx = i;
             break;
@@ -147,6 +146,8 @@ int WavPlayer::OpenByFilename(char* filename)
 
     if(idx >= 0)
         return Open(idx);
+    else
+        return FR_INVALID_NAME;
 }
 
 int WavPlayer::Close()
@@ -168,11 +169,8 @@ int16_t WavPlayer::Stream()
             buff_state_ = BUFFER_STATE_PREPARE_0;
 
         // absolute pointer
-        read_ptr_abs_ = (read_ptr_abs_ + 1) % (file_info_[file_sel_].length);
-        if(read_ptr_abs_ == 0)
-        {
-
-        }
+        read_ptr_abs_++;
+        read_ptr_abs_ %= file_info_[file_sel_].length;
     }
     else
     {
@@ -181,24 +179,6 @@ int16_t WavPlayer::Stream()
             playing_ = true;
     }
     return samp;
-}
-
-int16_t *WavPlayer::StreamStereo()
-{
-    int16_t* samps = new int16_t[2];
-
-    if(playing_)
-    {
-        samps[0] = Stream();
-        samps[1] = Stream();
-    }
-    else
-    {
-        samps[0] = 0;
-        samps[1] = 0;
-    }
-
-    return samps;
 }
 
 int WavPlayer::Prepare()
@@ -239,7 +219,6 @@ int WavPlayer::Prepare()
 
 void WavPlayer::Restart()
 {
-    playing_ = true;
     f_lseek(&fil_,
             sizeof(WAV_FormatTypeDef)
                 + file_info_[file_sel_].raw_data.SubChunk1Size);
@@ -260,6 +239,6 @@ WavPlayer::BufferState WavPlayer::GetNextBuffState()
 }
 
 uint32_t WavPlayer::TimeUntilEOF() {
-      if(!playing_) return 0;
-      return (float)((file_info_[file_sel_].length - read_ptr_abs_) / numChannels_ / 48000.0) * 1000;
-    };
+    if(!playing_) return 0;
+    return (float)((file_info_[file_sel_].length - read_ptr_abs_) / numChannels_ / 48000.0) * 1000;
+};

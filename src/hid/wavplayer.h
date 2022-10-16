@@ -23,6 +23,7 @@ struct WavFileInfo
 {
     WAV_FormatTypeDef raw_data;               /**< Raw wav data */
     char              name[WAV_FILENAME_MAX]; /**< Wav filename */
+    char              path[WAV_FILENAME_MAX]; /**< Wav filepath */
     uint32_t          length;                 /**< in samples   */
 };
 
@@ -53,9 +54,9 @@ class WavPlayer
     int Open(size_t sel);
 
     /** Opens the file by name for reading.
-    \param filename File to open
+    \param id ID of file to open
      */
-    int OpenByFilename(char* filename);
+    int OpenById(const char* id);
 
     /** Closes whatever file is currently open.
     \return &
@@ -64,10 +65,13 @@ class WavPlayer
 
     /** \return The next sample if playing, otherwise returns 0 */
     int16_t  Stream();
-    int16_t* StreamStereo();
 
     /** Collects buffer for playback when needed. */
     int Prepare();
+
+
+    inline void Play()  { playing_ = true; };
+    inline void Pause() { playing_ = false; };
 
     /** Resets the playback position to the beginning of the file immediately */
     void Restart();
@@ -88,6 +92,7 @@ class WavPlayer
 
     inline const char* GetNameOf(const size_t idx_) const { return file_info_[idx_].name; }
 
+    /** \return time left until the end of the playing file */
     uint32_t TimeUntilEOF();
 
   private:
