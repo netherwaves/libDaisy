@@ -127,6 +127,9 @@ class System
      ** \param delay_ticks Time to ddelay in microseconds */
     static void DelayTicks(uint32_t delay_ticks);
 
+    /** Triggers a reset of the seed. */
+    static void Reset();
+
     /** Triggers a reset of the seed and starts in bootloarder
      ** mode to allow firmware update. */
     static void ResetToBootloader();
