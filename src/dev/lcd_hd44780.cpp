@@ -171,7 +171,7 @@ void LcdHD44780::Home()
 
 void LcdHD44780::PrintAsync(uint8_t data, uint8_t nibble)
 {
-    WriteAsync(nibble ? data & 0x0F : data >> 4, 4);
+    WriteAsync(nibble ? data & 0x0F : (data >> 4) & 0x0F, 4);
 }
 
 
