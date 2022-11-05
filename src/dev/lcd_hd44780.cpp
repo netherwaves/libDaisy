@@ -214,6 +214,7 @@ void LcdHD44780::Write(uint8_t data, uint8_t len)
     dsy_gpio_write(&lcd_pin_en, 1);
     System::Delay(1);
     dsy_gpio_write(&lcd_pin_en, 0);
+    System::Delay(1);
 }
 
 void LcdHD44780::WriteAsync(uint8_t data, uint8_t len)
