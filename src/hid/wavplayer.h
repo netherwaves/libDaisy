@@ -105,7 +105,7 @@ class WavPlayer
 
     BufferState GetNextBuffState();
 
-    static constexpr size_t kMaxFiles = 26;
+    static constexpr size_t kMaxFiles = 60;
 
     int16_t*    buff_;
     size_t      bufferSize_;
