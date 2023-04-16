@@ -19,6 +19,8 @@ var hierarchy =
     [ "daisy::Apds9960I2CTransport::Config", "structdaisy_1_1_apds9960_i2_c_transport_1_1_config.html", null ],
     [ "daisy::AudioHandle::Config", "structdaisy_1_1_audio_handle_1_1_config.html", null ],
     [ "daisy::DacHandle::Config", "structdaisy_1_1_dac_handle_1_1_config.html", null ],
+    [ "daisy::DotStar< Transport >::Config", "structdaisy_1_1_dot_star_1_1_config.html", null ],
+    [ "daisy::DotStarSpiTransport::Config", "structdaisy_1_1_dot_star_spi_transport_1_1_config.html", null ],
     [ "daisy::Dps310< Transport >::Config", "structdaisy_1_1_dps310_1_1_config.html", null ],
     [ "daisy::Dps310I2CTransport::Config", "structdaisy_1_1_dps310_i2_c_transport_1_1_config.html", null ],
     [ "daisy::Dps310SpiTransport::Config", "structdaisy_1_1_dps310_spi_transport_1_1_config.html", null ],
@@ -49,6 +51,7 @@ var hierarchy =
     [ "daisy::SdmmcHandler::Config", "structdaisy_1_1_sdmmc_handler_1_1_config.html", null ],
     [ "daisy::ShiftRegister4021< num_daisychained, num_parallel >::Config", "structdaisy_1_1_shift_register4021_1_1_config.html", null ],
     [ "daisy::SpiHandle::Config", "structdaisy_1_1_spi_handle_1_1_config.html", null ],
+    [ "daisy::SSD130x4WireSoftSpiTransport::Config", "structdaisy_1_1_s_s_d130x4_wire_soft_spi_transport_1_1_config.html", null ],
     [ "daisy::SSD130x4WireSpiTransport::Config", "structdaisy_1_1_s_s_d130x4_wire_spi_transport_1_1_config.html", null ],
     [ "daisy::SSD130xDriver< width, height, Transport >::Config", "structdaisy_1_1_s_s_d130x_driver_1_1_config.html", null ],
     [ "daisy::SSD130xI2CTransport::Config", "structdaisy_1_1_s_s_d130x_i2_c_transport_1_1_config.html", null ],
@@ -73,6 +76,8 @@ var hierarchy =
     [ "daisy::DaisySeed", "classdaisy_1_1_daisy_seed.html", null ],
     [ "daisy::DaisyVersio", "classdaisy_1_1_daisy_versio.html", null ],
     [ "daisy::MAX11300Types::DmaBuffer", "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html", null ],
+    [ "daisy::DotStar< Transport >", "classdaisy_1_1_dot_star.html", null ],
+    [ "daisy::DotStarSpiTransport", "classdaisy_1_1_dot_star_spi_transport.html", null ],
     [ "daisy::Dps310< Transport >", "classdaisy_1_1_dps310.html", null ],
     [ "daisy::Dps310I2CTransport", "classdaisy_1_1_dps310_i2_c_transport.html", null ],
     [ "daisy::Dps310SpiTransport", "classdaisy_1_1_dps310_spi_transport.html", null ],
@@ -82,15 +87,14 @@ var hierarchy =
     [ "daisy::Encoder", "classdaisy_1_1_encoder.html", null ],
     [ "daisy::FatFSInterface", "classdaisy_1_1_fat_f_s_interface.html", null ],
     [ "daisy::FIFOBase< T >", "classdaisy_1_1_f_i_f_o_base.html", [
+      [ "daisy::FIFO< Event, 256 >", "classdaisy_1_1_f_i_f_o.html", null ],
       [ "daisy::FIFO< T, capacity >", "classdaisy_1_1_f_i_f_o.html", null ]
     ] ],
-    [ "daisy::FIFOBase< Event >", "classdaisy_1_1_f_i_f_o_base.html", [
-      [ "daisy::FIFO< Event, 256 >", "classdaisy_1_1_f_i_f_o.html", null ]
-    ] ],
-    [ "daisy::FixedCapStrBase< CharType >", "classdaisy_1_1_fixed_cap_str_base.html", null ],
-    [ "daisy::FixedCapStrBase< char >", "classdaisy_1_1_fixed_cap_str_base.html", [
+    [ "daisy::FIFOBase< Event >", "classdaisy_1_1_f_i_f_o_base.html", null ],
+    [ "daisy::FixedCapStrBase< CharType >", "classdaisy_1_1_fixed_cap_str_base.html", [
       [ "daisy::FixedCapStr< capacity, CharType >", "classdaisy_1_1_fixed_cap_str.html", null ]
     ] ],
+    [ "daisy::FixedCapStrBase< char >", "classdaisy_1_1_fixed_cap_str_base.html", null ],
     [ "FontDef", "struct_font_def.html", null ],
     [ "daisy::GateIn", "classdaisy_1_1_gate_in.html", null ],
     [ "daisy::GPIO", "classdaisy_1_1_g_p_i_o.html", null ],
@@ -146,10 +150,10 @@ var hierarchy =
       [ "daisy::OneBitGraphicsDisplayImpl< OledDisplay< DisplayDriver > >", "classdaisy_1_1_one_bit_graphics_display_impl.html", [
         [ "daisy::OledDisplay< DisplayDriver >", "classdaisy_1_1_oled_display.html", null ]
       ] ],
-      [ "daisy::OneBitGraphicsDisplayImpl< OledDisplay< daisy::SSD130xDriver > >", "classdaisy_1_1_one_bit_graphics_display_impl.html", [
+      [ "daisy::OneBitGraphicsDisplayImpl< OledDisplay< daisy::SSD130xDriver > >", "classdaisy_1_1_one_bit_graphics_display_impl.html", null ],
+      [ "daisy::OneBitGraphicsDisplayImpl< ChildType >", "classdaisy_1_1_one_bit_graphics_display_impl.html", [
         [ "daisy::OledDisplay< daisy::SSD130xDriver >", "classdaisy_1_1_oled_display.html", null ]
-      ] ],
-      [ "daisy::OneBitGraphicsDisplayImpl< ChildType >", "classdaisy_1_1_one_bit_graphics_display_impl.html", null ]
+      ] ]
     ] ],
     [ "daisy::Parameter", "classdaisy_1_1_parameter.html", null ],
     [ "daisy::Pcm3060", "classdaisy_1_1_pcm3060.html", null ],
@@ -181,18 +185,17 @@ var hierarchy =
     [ "daisy::SongSelectEvent", "structdaisy_1_1_song_select_event.html", null ],
     [ "daisy::UI::SpecialControlIds", "structdaisy_1_1_u_i_1_1_special_control_ids.html", null ],
     [ "daisy::SpiHandle", "classdaisy_1_1_spi_handle.html", null ],
+    [ "daisy::SSD130x4WireSoftSpiTransport", "classdaisy_1_1_s_s_d130x4_wire_soft_spi_transport.html", null ],
     [ "daisy::SSD130x4WireSpiTransport", "classdaisy_1_1_s_s_d130x4_wire_spi_transport.html", null ],
     [ "daisy::SSD130xDriver< width, height, Transport >", "classdaisy_1_1_s_s_d130x_driver.html", null ],
     [ "daisy::SSD130xI2CTransport", "classdaisy_1_1_s_s_d130x_i2_c_transport.html", null ],
     [ "daisy::StackBase< T >", "classdaisy_1_1_stack_base.html", [
+      [ "daisy::Stack< daisy::UiPage *, kMaxNumPages >", "classdaisy_1_1_stack.html", null ],
+      [ "daisy::Stack< daisy::UiCanvasDescriptor, kMaxNumCanvases >", "classdaisy_1_1_stack.html", null ],
       [ "daisy::Stack< T, capacity >", "classdaisy_1_1_stack.html", null ]
     ] ],
-    [ "daisy::StackBase< daisy::UiCanvasDescriptor >", "classdaisy_1_1_stack_base.html", [
-      [ "daisy::Stack< daisy::UiCanvasDescriptor, kMaxNumCanvases >", "classdaisy_1_1_stack.html", null ]
-    ] ],
-    [ "daisy::StackBase< daisy::UiPage * >", "classdaisy_1_1_stack_base.html", [
-      [ "daisy::Stack< daisy::UiPage *, kMaxNumPages >", "classdaisy_1_1_stack.html", null ]
-    ] ],
+    [ "daisy::StackBase< daisy::UiCanvasDescriptor >", "classdaisy_1_1_stack_base.html", null ],
+    [ "daisy::StackBase< daisy::UiPage * >", "classdaisy_1_1_stack_base.html", null ],
     [ "daisy::Switch", "classdaisy_1_1_switch.html", null ],
     [ "daisy::Switch3", "classdaisy_1_1_switch3.html", null ],
     [ "daisy::System", "classdaisy_1_1_system.html", null ],
