@@ -1,0 +1,36 @@
+{
+  "name": "libDaisy",
+  "version": "0.0.1",
+  "build": {
+    "extraScript": "./platformio_extra_build_script.py",
+    "srcDir": "./",
+    "srcFilter": [
+      "+<core/startup_stm32h750xx.c>",
+
+      "+<src/sys/dma>",
+      "+<src/hid>",
+      "+<src/per/gpio>",
+      "+<src/per/sai>",
+      "+<src/per/sdmmc>",
+      "+<src/util>",
+      "+<src/sys/system_stm32h7xx>",
+      "+<src/usbd>",
+      "+<src/usbh>",
+
+      "+<src/>",
+      "+<src/sys/fatfs>",
+      "+<src/sys/system>",
+      "+<src/dev/>",
+      "+<src/per>",
+      "+<src/util>"
+    ],
+    "flags": [
+      "-Isrc/sys/stm32h7_hal_conf.h",
+      "-Isrc",
+      "-Isrc/sys",
+      "-Isrc/usbd",
+      "-Isrc/usbh",
+      "-IMiddlewares/Third_Party/FatFs/src"
+    ]
+  }
+}
