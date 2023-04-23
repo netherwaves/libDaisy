@@ -6,26 +6,27 @@
     "srcDir": "./",
     "srcFilter": [
       "+<core/startup_stm32h750xx.c>",
-
-      "+<src/sys/dma>",
+      "+<src/>",
+      "+<src/dev>",
       "+<src/hid>",
+      "+<src/per>",
       "+<src/per/gpio>",
       "+<src/per/sai>",
       "+<src/per/sdmmc>",
-      "+<src/util>",
-      "+<src/sys/system_stm32h7xx>",
-      "+<src/usbd>",
-      "+<src/usbh>",
-
-      "+<src/>",
+      "+<src/sys/dma>",
       "+<src/sys/fatfs>",
       "+<src/sys/system>",
-      "+<src/dev/>",
-      "+<src/per>",
-      "+<src/util>"
+      "+<src/sys/system_stm32h7xx.c>",
+      "+<src/usbd>",
+      "+<src/usbh>",
+      "+<src/util>",
+
+      "+<Middlewares/Third_Party/FatFs/src/diskio.c>",
+      "+<Middlewares/Third_Party/FatFs/src/ff.c>",
+      "+<Middlewares/Third_Party/FatFs/src/ff_gen_drv.c>",
+      "+<Middlewares/Third_Party/FatFs/src/option/ccsbcs.c>"
     ],
     "flags": [
-      "-Isrc/sys/stm32h7_hal_conf.h",
       "-Isrc",
       "-Isrc/sys",
       "-Isrc/usbd",
