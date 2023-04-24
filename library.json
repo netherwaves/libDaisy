@@ -17,6 +17,7 @@
       "+<src/sys/fatfs>",
       "+<src/sys/system>",
       "+<src/sys/system_stm32h7xx.c>",
+      "+<src/ui>",
       "+<src/usbd>",
       "+<src/usbh>",
       "+<src/util>",
@@ -31,6 +32,8 @@
       "-Isrc/sys",
       "-Isrc/usbd",
       "-Isrc/usbh",
+      "-IDrivers/CMSIS/Include",
+      "-IDrivers/CMSIS/Device/ST/STM32H7xx/Include",
       "-IMiddlewares/Third_Party/FatFs/src"
     ]
   }
