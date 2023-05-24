@@ -178,7 +178,7 @@ CFLAGS += -MMD -MP -MF"$(@:%.o=%.d)"
 
 CPPFLAGS = $(CFLAGS)
 CPPFLAGS += \
--fno-exceptions \
+-fexceptions \
 -fasm \
 -finline \
 -finline-functions-called-once \

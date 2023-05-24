@@ -294,6 +294,15 @@ void System::DelayTicks(uint32_t delay_ticks)
     tim_.DelayTick(delay_ticks);
 }
 
+void System::Reset()
+{
+    // disable interupts
+    RCC->CIER = 0x00000000;
+
+    // Software Reset
+    HAL_NVIC_SystemReset();
+}
+
 void System::ResetToBootloader()
 {
     // Initialize Boot Pin

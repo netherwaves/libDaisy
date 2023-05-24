@@ -181,9 +181,9 @@ class WavWriter
     /** Calculate the file size based on current recording */
     inline uint32_t CalcFileSize()
     {
-        wavheader_.SubCHunk2Size
+        wavheader_.SubChunk2Size
             = num_samps_ * cfg_.channels * cfg_.bitspersample / 8;
-        return 36 + wavheader_.SubCHunk2Size;
+        return 36 + wavheader_.SubChunk2Size;
     }
 
     /** Compute the byte rate given the user settings. */

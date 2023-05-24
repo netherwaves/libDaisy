@@ -129,6 +129,7 @@ class System
 
     /** Triggers a reset of the seed and starts in bootloarder
      ** mode to allow firmware update. */
+    static void Reset();
     static void ResetToBootloader();
 
     /** Returns the tick rate in Hz with which GetTick() is incremented. */

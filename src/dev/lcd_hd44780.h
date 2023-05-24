@@ -47,6 +47,8 @@ class LcdHD44780
      */
     void PrintInt(int number);
 
+    void PrintChar(char c);
+
     /** 
     Moves the cursor of the LCD (the place to print the next value).
      * \param row is the row number (0 or 1).
@@ -54,10 +56,21 @@ class LcdHD44780
      */
     void SetCursor(uint8_t row, uint8_t col);
 
+    void CreateChar(uint8_t pos, uint8_t* charmap);
+
     /** 
     Clears the contents of the LCD.
      */
     void Clear();
+
+    void Home();
+
+    // async
+    inline void SetCommandRegister() { dsy_gpio_write(&lcd_pin_rs, 0); }
+    inline void SetDataRegister()    { dsy_gpio_write(&lcd_pin_rs, 1); }
+    inline void ResetEnablePin()     { dsy_gpio_write(&lcd_pin_en, 0); }
+    
+    void PrintAsync(uint8_t, uint8_t);
 
   private:
     bool     cursor_on;
@@ -69,6 +82,8 @@ class LcdHD44780
     void WriteData(uint8_t);
     void WriteCommand(uint8_t);
     void Write(uint8_t, uint8_t);
+
+    void WriteAsync(uint8_t, uint8_t);
 };
 
 } // namespace daisy

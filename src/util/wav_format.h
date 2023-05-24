@@ -49,7 +49,7 @@ typedef struct
     uint16_t BlockAlign;    /**< & */
     uint16_t BitPerSample;  /**< & */
     uint32_t SubChunk2ID;   /**< & */
-    uint32_t SubCHunk2Size; /**< & */
+    uint32_t SubChunk2Size; /**< & */
 } WAV_FormatTypeDef;
 
 } // namespace daisy

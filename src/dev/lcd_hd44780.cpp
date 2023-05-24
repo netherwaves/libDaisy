@@ -26,6 +26,8 @@ Based on: HD44780-Stm32HAL by Olivier Van den Eede (https://github.com/4ilo/HD44
 #define OPT_S 0x01   // Shift entire display to right
 #define OPT_INC 0x02 // Cursor increment
 
+#define RETURN_HOME 0x02 
+
 #define DISPLAY_ON_OFF_CONTROL 0x08
 #define OPT_D 0x04 // Turn on display
 #define OPT_C 0x02 // Turn on cursor
@@ -126,12 +128,32 @@ void LcdHD44780::PrintInt(int number)
     Print(buffer);
 }
 
+void LcdHD44780::PrintChar(char c)
+{
+    WriteData(c);
+}
+
 
 // Set cursor position
 
 void LcdHD44780::SetCursor(uint8_t row, uint8_t col)
 {
-    WriteCommand(SET_DDRAM_ADDR + (row == 1 ? 0x40 : 0) + col);
+    uint8_t row_offset = 0;
+
+    if(row % 2 == 1) row_offset += 0x40;
+    if(row > 1)      row_offset += 0x14;
+
+    WriteCommand(SET_DDRAM_ADDR + row_offset + col);
+}
+
+void LcdHD44780::CreateChar(uint8_t pos, uint8_t* charmap)
+{
+    pos &= 0x07;
+    WriteCommand(SETCGRAM_ADDR | (pos << 3));
+    for(int i = 0; i < 8; i++)
+    {
+        WriteData(charmap[i]);
+    }
 }
 
 
@@ -140,6 +162,16 @@ void LcdHD44780::SetCursor(uint8_t row, uint8_t col)
 void LcdHD44780::Clear()
 {
     WriteCommand(CLEAR_DISPLAY);
+}
+
+void LcdHD44780::Home()
+{
+    WriteCommand(RETURN_HOME);
+}
+
+void LcdHD44780::PrintAsync(uint8_t data, uint8_t nibble)
+{
+    WriteAsync(nibble ? data & 0x0F : (data >> 4) & 0x0F, 4);
 }
 
 
@@ -182,6 +214,17 @@ void LcdHD44780::Write(uint8_t data, uint8_t len)
     dsy_gpio_write(&lcd_pin_en, 1);
     System::Delay(1);
     dsy_gpio_write(&lcd_pin_en, 0);
+    System::Delay(1);
+}
+
+void LcdHD44780::WriteAsync(uint8_t data, uint8_t len)
+{
+    for(uint8_t i = 0; i < len; i++)
+    {
+        dsy_gpio_write(&lcd_data_pin[i], (data >> i) & 0x01);
+    }
+    
+    dsy_gpio_write(&lcd_pin_en, 1);
 }
 
 } // namespace daisy

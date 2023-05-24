@@ -1,25 +1,36 @@
 #include <cstring>
 #include "hid/wavplayer.h"
+#include "daisy_seed.h"
 
 using namespace daisy;
 
-void WavPlayer::Init(const char *search_path)
+FRESULT WavPlayer::Init(const char *search_path,
+                        int16_t    *buffer,
+                        size_t      bufferSize,
+                        size_t      numChannels)
 {
+    buff_        = buffer;
+    bufferSize_  = bufferSize / numChannels;
+    numChannels_ = numChannels;
+
     // First check for all .wav files, and add them to the list until its full or there are no more.
     // Only checks '/'
     FRESULT result = FR_OK;
     FILINFO fno;
     DIR     dir;
-    char *  fn;
+    char   *fn;
     file_sel_ = 0;
     file_cnt_ = 0;
-    playing_  = true;
+    playing_  = false;
     looping_  = false;
+
     // Open Dir and scan for files.
-    if(f_opendir(&dir, search_path) != FR_OK)
+    result = f_opendir(&dir, search_path);
+    if(result != FR_OK)
     {
-        return;
+        return result;
     }
+
     do
     {
         result = f_readdir(&dir, &fno);
@@ -35,8 +46,16 @@ void WavPlayer::Init(const char *search_path)
         {
             if(strstr(fn, ".wav") || strstr(fn, ".WAV"))
             {
-                strcpy(file_info_[file_cnt_].name, search_path);
-                strcat(file_info_[file_cnt_].name, fn);
+                strcpy(file_info_[file_cnt_].name, fn);
+                strcpy(file_info_[file_cnt_].path, search_path);
+
+                // add an extra slash for non-root directories
+                if(strcmp(search_path, "0:/") != 0)
+                {
+                    strcat(file_info_[file_cnt_].path, "/");
+                }
+
+                strcat(file_info_[file_cnt_].path, fn);
                 file_cnt_++;
                 // For now lets break anyway to test.
                 //                break;
@@ -52,27 +71,36 @@ void WavPlayer::Init(const char *search_path)
     for(size_t i = 0; i < file_cnt_; i++)
     {
         size_t bytesread;
-        if(f_open(&fil_, file_info_[i].name, (FA_OPEN_EXISTING | FA_READ))
+        if(f_open(&fil_, file_info_[i].path, (FA_OPEN_EXISTING | FA_READ))
            == FR_OK)
         {
             // Populate the WAV Info
-            if(f_read(&fil_,
-                      (void *)&file_info_[i].raw_data,
-                      sizeof(WAV_FormatTypeDef),
-                      &bytesread)
-               != FR_OK)
+            result = f_read(&fil_,
+                            (void *)&file_info_[i].raw_data,
+                            sizeof(WAV_FormatTypeDef),
+                            &bytesread);
+            if(result != FR_OK)
             {
                 // Maybe add return type
-                return;
+                return result;
             }
+
+            // add length
+            file_info_[i].length = file_info_[i].raw_data.FileSize 
+                                 - file_info_[i].raw_data.SubChunk1Size
+                                 - sizeof(WAV_FormatTypeDef);
+
+            file_info_[i].length /= 2;                  // 16-bit
+
             f_close(&fil_);
         }
     }
-    // fill buffer with first file preemptively.
-    buff_state_ = BUFFER_STATE_PREPARE_0;
-    Open(0);
-    Prepare();
-    read_ptr_ = 0;
+
+    // initialize at Nothing
+    buff_state_ = BUFFER_STATE_IDLE;
+    read_ptr_ = read_ptr_abs_ = 0;
+
+    return result;
 }
 
 
@@ -83,9 +111,43 @@ int WavPlayer::Open(size_t sel)
         f_close(&fil_);
         file_sel_ = sel < file_cnt_ ? sel : file_cnt_ - 1;
     }
+
     // Set Buffer Position
-    return f_open(
-        &fil_, file_info_[file_sel_].name, (FA_OPEN_EXISTING | FA_READ));
+    if(int result = f_open(
+        &fil_, file_info_[file_sel_].path, (FA_OPEN_EXISTING | FA_READ)))
+    {
+        return result;
+    }
+    else
+    {
+        // prepare buffer for reading...
+        read_ptr_ = read_ptr_abs_ = 0;
+        buff_state_ = BUFFER_STATE_PREPARE_0;
+        Restart();
+        Prepare();
+
+        return result;
+    }
+}
+
+int WavPlayer::OpenById(const char* id)
+{
+    // add extension
+    // find index based on filename
+    int idx = -1;
+    for(size_t i = 0; i < kMaxFiles; i++)
+    {
+        if(strstr(file_info_[i].name, id) != nullptr)
+        {
+            idx = i;
+            break;
+        }
+    }
+
+    if(idx >= 0)
+        return Open(idx);
+    else
+        return FR_INVALID_NAME;
 }
 
 int WavPlayer::Close()
@@ -100,11 +162,15 @@ int16_t WavPlayer::Stream()
     {
         samp = buff_[read_ptr_];
         // Increment rpo
-        read_ptr_ = (read_ptr_ + 1) % kBufferSize;
+        read_ptr_ = (read_ptr_ + 1) % (bufferSize_ * numChannels_);
         if(read_ptr_ == 0)
             buff_state_ = BUFFER_STATE_PREPARE_1;
-        else if(read_ptr_ == kBufferSize / 2)
+        else if(read_ptr_ == bufferSize_ * numChannels_ / 2)
             buff_state_ = BUFFER_STATE_PREPARE_0;
+
+        // absolute pointer
+        read_ptr_abs_++;
+        read_ptr_abs_ %= file_info_[file_sel_].length;
     }
     else
     {
@@ -115,24 +181,30 @@ int16_t WavPlayer::Stream()
     return samp;
 }
 
-void WavPlayer::Prepare()
+int WavPlayer::Prepare()
 {
+    FRESULT readres = FR_OK;
+
     if(buff_state_ != BUFFER_STATE_IDLE)
     {
         size_t offset, bytesread, rxsize;
         bytesread = 0;
-        rxsize    = (kBufferSize / 2) * sizeof(buff_[0]);
-        offset    = buff_state_ == BUFFER_STATE_PREPARE_1 ? kBufferSize / 2 : 0;
-        f_read(&fil_, &buff_[offset], rxsize, &bytesread);
+        rxsize    = bufferSize_ * numChannels_ * sizeof(buff_[0]) / 2;
+        offset    = buff_state_ == BUFFER_STATE_PREPARE_1
+                        ? bufferSize_ * numChannels_ / 2
+                        : 0;
+
+        readres = f_read(&fil_, &buff_[offset], rxsize, &bytesread);
+
         if(bytesread < rxsize || f_eof(&fil_))
         {
             if(looping_)
             {
                 Restart();
-                f_read(&fil_,
-                       &buff_[offset + (bytesread / 2)],
-                       rxsize - bytesread,
-                       &bytesread);
+                readres = f_read(&fil_,
+                                 &buff_[offset + (bytesread / 2)],
+                                 rxsize - bytesread,
+                                 &bytesread);
             }
             else
             {
@@ -141,11 +213,12 @@ void WavPlayer::Prepare()
         }
         buff_state_ = BUFFER_STATE_IDLE;
     }
+
+    return readres;
 }
 
 void WavPlayer::Restart()
 {
-    playing_ = true;
     f_lseek(&fil_,
             sizeof(WAV_FormatTypeDef)
                 + file_info_[file_sel_].raw_data.SubChunk1Size);
@@ -154,8 +227,8 @@ void WavPlayer::Restart()
 WavPlayer::BufferState WavPlayer::GetNextBuffState()
 {
     size_t next_samp;
-    next_samp = (read_ptr_ + 1) % kBufferSize;
-    if(next_samp < kBufferSize / 2)
+    next_samp = (read_ptr_ + 1) % bufferSize_;
+    if(next_samp < bufferSize_ / 2)
     {
         return BUFFER_STATE_PREPARE_1;
     }
@@ -164,3 +237,8 @@ WavPlayer::BufferState WavPlayer::GetNextBuffState()
         return BUFFER_STATE_PREPARE_0;
     }
 }
+
+uint32_t WavPlayer::TimeUntilEOF() {
+    if(!playing_) return 0;
+    return (float)((file_info_[file_sel_].length - read_ptr_abs_) / numChannels_ / 48000.0) * 1000;
+};

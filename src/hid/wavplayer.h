@@ -23,6 +23,8 @@ struct WavFileInfo
 {
     WAV_FormatTypeDef raw_data;               /**< Raw wav data */
     char              name[WAV_FILENAME_MAX]; /**< Wav filename */
+    char              path[WAV_FILENAME_MAX]; /**< Wav filepath */
+    uint32_t          length;                 /**< in samples   */
 };
 
 /* 
@@ -41,12 +43,20 @@ class WavPlayer
     ~WavPlayer() {}
 
     /** Initializes the WavPlayer, loading up to max_files of wav files from an SD Card. */
-    void Init(const char* search_path);
+    FRESULT Init(const char* search_path,
+                 int16_t*    buffer,
+                 size_t      bufferSize,
+                 size_t      numChannels = 1);
 
     /** Opens the file at index sel for reading.
     \param sel File to open
      */
     int Open(size_t sel);
+
+    /** Opens the file by name for reading.
+    \param id ID of file to open
+     */
+    int OpenById(const char* id);
 
     /** Closes whatever file is currently open.
     \return &
@@ -57,7 +67,11 @@ class WavPlayer
     int16_t Stream();
 
     /** Collects buffer for playback when needed. */
-    void Prepare();
+    int Prepare();
+
+
+    inline void Play() { playing_ = true; };
+    inline void Pause() { playing_ = false; };
 
     /** Resets the playback position to the beginning of the file immediately */
     void Restart();
@@ -76,6 +90,14 @@ class WavPlayer
     /** \return currently selected file.*/
     inline size_t GetCurrentFile() const { return file_sel_; }
 
+    inline const char* GetNameOf(const size_t idx_) const
+    {
+        return file_info_[idx_].name;
+    }
+
+    /** \return time left until the end of the playing file */
+    uint32_t TimeUntilEOF();
+
   private:
     enum BufferState
     {
@@ -86,15 +108,18 @@ class WavPlayer
 
     BufferState GetNextBuffState();
 
-    static constexpr size_t kMaxFiles   = 8;
-    static constexpr size_t kBufferSize = 4096;
-    WavFileInfo             file_info_[kMaxFiles];
-    size_t                  file_cnt_, file_sel_;
-    BufferState             buff_state_;
-    int16_t                 buff_[kBufferSize];
-    size_t                  read_ptr_;
-    bool                    looping_, playing_;
-    FIL                     fil_;
+    static constexpr size_t kMaxFiles = 60;
+
+    int16_t*    buff_;
+    size_t      bufferSize_;
+    size_t      numChannels_;
+    WavFileInfo file_info_[kMaxFiles];
+    size_t      file_cnt_, file_sel_;
+    BufferState buff_state_;
+    size_t      read_ptr_;
+    uint32_t    read_ptr_abs_;
+    bool        looping_, playing_;
+    FIL         fil_;
 };
 
 } // namespace daisy
